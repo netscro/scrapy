@@ -16,3 +16,4 @@ class PeopleItem(Item):
     name = Field()
     age = Field()
     profession = Field()
+    detail_info = Field()

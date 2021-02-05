@@ -30,12 +30,27 @@ class WorkuaSpider(scrapy.Spider):
             people_item['profession'] = profession
 
             # возвращаем по одному человеку через генератор
-            yield people_item
+            # yield people_item
+
+            # детальная информация работника
+            detail_page = person.css('div.row div a::attr(href)').get()
+            detail_page_url = self.site_url + detail_page
+            yield Request(detail_page_url, self.parse_detail_info_page,
+                          meta={
+                              'people_item': people_item
+                          })
 
         # переход по страницам пагинации
         next_page = response.css('ul.pagination-small li a::attr(href)').getall()
         if next_page:
             next_url = self.site_url + next_page[-1]
             yield Request(next_url)
+
+    def parse_detail_info_page(self, response):
+        detail_info_url = response.css('p#addInfo::text').get()
+        people_item = response.meta['people_item']
+        people_item['detail_info'] = detail_info_url
+        yield people_item
+
 
 
