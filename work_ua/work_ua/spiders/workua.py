@@ -1,7 +1,7 @@
+from work_ua.items import PeopleItem
+
 import scrapy
 from scrapy import Request
-
-from work_ua.items import PeopleItem
 
 
 class WorkuaSpider(scrapy.Spider):
@@ -41,16 +41,13 @@ class WorkuaSpider(scrapy.Spider):
                           })
 
         # переход по страницам пагинации
-        next_page = response.css('ul.pagination-small li a::attr(href)').getall()
-        if next_page:
-            next_url = self.site_url + next_page[-1]
-            yield Request(next_url)
+        # next_page = response.css('ul.pagination-small li a::attr(href)').getall() # noqa - E501 line too long
+        # if next_page:
+        #     next_url = self.site_url + next_page[-1]
+        #     yield Request(next_url)
 
     def parse_detail_info_page(self, response):
         detail_info_url = response.css('p#addInfo::text').get()
         people_item = response.meta['people_item']
         people_item['detail_info'] = detail_info_url
         yield people_item
-
-
-

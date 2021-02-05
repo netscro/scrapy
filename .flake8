@@ -1,0 +1,6 @@
+[flake8]
+exclude =
+    ./work_ua/work_ua/settings.py,
+    ./work_ua/work_ua/middlewares.py,
+    ./work_ua/work_ua/pipelines.py
+
