@@ -1,7 +1,7 @@
+from work_ua.items import PeopleItem
+
 import scrapy
 from scrapy import Request
-
-from work_ua.items import PeopleItem
 
 
 class WorkuaSpider(scrapy.Spider):
