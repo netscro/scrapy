@@ -41,7 +41,7 @@ class WorkuaSpider(scrapy.Spider):
                           })
 
         # переход по страницам пагинации
-        # next_page = response.css('ul.pagination-small li a::attr(href)').getall()
+        # next_page = response.css('ul.pagination-small li a::attr(href)').getall() # noqa - E501 line too long
         # if next_page:
         #     next_url = self.site_url + next_page[-1]
         #     yield Request(next_url)
@@ -51,6 +51,3 @@ class WorkuaSpider(scrapy.Spider):
         people_item = response.meta['people_item']
         people_item['detail_info'] = detail_info_url
         yield people_item
-
-
-
