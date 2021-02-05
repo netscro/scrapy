@@ -1,5 +1,7 @@
 import scrapy
 
+from work_ua.items import PeopleItem
+
 
 class WorkuaSpider(scrapy.Spider):
     name = 'workua'
@@ -16,10 +18,12 @@ class WorkuaSpider(scrapy.Spider):
             else:
                 age = str(age).replace('· ', 'None')
             profession = person.css('h2 > a::text').get()
-            # print(name, str(age).replace('·', 'None'), profession)
 
-            yield {
-                'name': name,
-                'age': str(age).replace('\xa0', ' '),
-                'profession': profession
-            }
+            # структура json документа при помощи items.py
+            people_item = PeopleItem()
+            people_item['name'] = name
+            people_item['age'] = age
+            people_item['profession'] = profession
+
+            # возвращаем по одному человеку через генератор
+            yield people_item
